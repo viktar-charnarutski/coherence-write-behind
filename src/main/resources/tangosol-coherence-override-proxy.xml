@@ -1,0 +1,63 @@
+<?xml version='1.0'?>
+
+<!DOCTYPE coherence SYSTEM "coherence.dtd">
+
+<coherence>
+
+    <cluster-config xml-override="../conf/cluster-config-proxy.xml">
+        <member-identity>
+            <cluster-name system-property="tangosol.coherence.cluster">VIKTARX</cluster-name>
+        </member-identity>
+        <services>
+            <service id="3">
+                <init-params>
+                    <init-param id="4">
+                        <param-name>local-storage</param-name>
+                        <param-value system-property="tangosol.coherence.distributed.localstorage">false</param-value>
+                    </init-param>
+                </init-params>
+            </service>
+        </services>
+        <multicast-listener>
+            <port system-property="coherence.clusterport">11100</port>
+        </multicast-listener>
+        <unicast-listener>
+            <address system-property="tangosol.coherence.localhost">localhost</address>
+            <port system-property="tangosol.coherence.localport">8992</port>
+            <port-auto-adjust system-property="tangosol.coherence.localport.adjust">false</port-auto-adjust>
+            <well-known-addresses>
+                <socket-address id="1">
+                    <address>localhost</address>
+                    <port>8990</port>
+                </socket-address>
+            </well-known-addresses>
+        </unicast-listener>
+    </cluster-config>
+
+    <configurable-cache-factory-config>
+        <init-params>
+            <init-param>
+                <param-type>java.lang.String</param-type>
+                <param-value system-property="tangosol.coherence.cacheconfig">coherence-proxy-server-config.xml</param-value>
+            </init-param>
+        </init-params>
+    </configurable-cache-factory-config>
+
+    <logging-config>
+        <severity-level system-property="tangosol.coherence.log.level">9</severity-level>
+        <destination system-property="tangosol.coherence.log">../log/coherence-proxy/coherence-proxy.log</destination>
+    </logging-config>
+
+    <management-config>
+        <managed-nodes system-property="tangosol.coherence.management">all</managed-nodes>
+        <allow-remote-management
+                system-property="tangosol.coherence.management.remote">true
+        </allow-remote-management>
+        <reporter>
+            <configuration system-property="tangosol.coherence.management.report.configuration">
+                coherence-reports.xml
+            </configuration>
+            <autostart system-property="tangosol.coherence.management.report.autostart">true</autostart>
+        </reporter>
+    </management-config>
+</coherence>
