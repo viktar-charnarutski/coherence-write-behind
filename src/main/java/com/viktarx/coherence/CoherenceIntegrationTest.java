@@ -8,8 +8,8 @@ import org.junit.Test;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class CoherenceIntegrationTest {
 
@@ -39,15 +39,14 @@ public class CoherenceIntegrationTest {
 
     @Test
     public void put() throws Exception {
-        boolean success = true;
+        String exMessage = null;
         Order order = order();
         try {
             cache.put(order.profile(), order);
         } catch (Exception ex) {
-            success = false;
-            ex.printStackTrace();
+            exMessage = ex.getMessage();
         }
-        assertTrue(String.format("Failed to put an order by profile=%s", order.profile()), success);
+        assertNull(String.format("put failed due to %s", exMessage), exMessage);
     }
 
     @Test
